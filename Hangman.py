@@ -1,7 +1,8 @@
 """
 Gra w "wisielca". Jeden z użytkowników wprowadza słowo, które drugi z użytkowników ma odgadnąć.
 Program wyrysowuje tyle "_" ile liter ma podane słowo.
-Odgadujący podaje literka po literce. Jeżeli litera występuje - należy zamienić "_" na literę (lub litery, jeżeli jest ich więcej).
+Odgadujący podaje literka po literce. Jeżeli litera występuje - należy zamienić "_" na literę (lub litery,
+jeżeli jest ich więcej).
 Jeżeli litera nie występuje to należy zacząć rysowanie szubienicy i wisielca.
 Kolejność rysowania szubienicy:
 1. Podstawa
@@ -23,16 +24,27 @@ class Hangman:
     def __init__(self, word):
         self.word = word
 
+    # rysuje tyle "_" ile jest liter w słowie
     def print_fields(self):
         fields = "_"
-        counter = 0
-        for n in self.word:
+        field_counter = 0
+        for _ in self.word:
             # print("_", end="\t")
-            counter += 1
-        return fields * counter
+            field_counter += 1
+        return fields * field_counter
 
+    # liczy ile pól jest w słowie
     def count_fields(self):
         return len(self.word)
+
+
+def fill_fields(word, choosen_letter):
+    if word.__contains__(choosen_letter):
+        for x in word:
+            if x == choosen_letter:
+                print(x, end="")
+            else:
+                print("_", end="")
 
 
 # Deklaracja słowa
@@ -44,23 +56,23 @@ word_length = game1.count_fields()
 print(f"Pola słowa to: {game1.print_fields()}")
 print(f"słowo sklada się z {word_length} liter")
 
-number_of_attemps = 11
+number_of_attemps = 11  # bo tyle ruchów potrzeba do narysowania szubienicy i wisielca
 print(f"Masz {number_of_attemps} prób")
 
 used_letters = []
 counter = 0
-word_result = ""
+word_result = game1.print_fields()
 while number_of_attemps > 0:
-    print(f"Użyte do tej pory litery: {used_letters}")
+    print(f"\nUżyte do tej pory litery: {used_letters}")
     print("Podaj literę")
     letter = input()
     if word_input.__contains__(letter):
         print(f"litera {letter} występuje w słowie")
-        word_result = word_input.replace("_", letter, counter)
+        print("Bieżący status słowa:")
+        fill_fields(game1.word, letter)
     else:
-        print(f"litera {letter} nie występuje w słowie")
+        print(f"litera {letter} NIE występuje w słowie")
         number_of_attemps -= 1
         used_letters.append(letter)
         print(f"Pozostało {number_of_attemps} prób")
     counter += 1
-    print(word_result)
