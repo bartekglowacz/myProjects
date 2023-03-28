@@ -38,13 +38,14 @@ class Hangman:
         return len(self.word)
 
 
-def fill_fields(word, choosen_letter):
-    if word.__contains__(choosen_letter):
+def fill_fields(word, chosen_letter):
+    if word.__contains__(chosen_letter):
         for x in word:
-            if x == choosen_letter:
+            if x == chosen_letter:
                 print(x, end="")
             else:
                 print("_", end="")
+    return word
 
 
 # Deklaracja słowa
