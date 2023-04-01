@@ -19,61 +19,125 @@ Kolejność rysowania wisielca:
 7. Druga noga
 """
 
+import os
+
 
 class Hangman:
-    def __init__(self, word):
-        self.word = word
+    def __init__(self):
+        self.correct_guess = []
+        self.secret_word = ""
+        self.remaining_attempts = 7
+        self.incorrect_guess = []
 
-    # rysuje tyle "_" ile jest liter w słowie
-    def print_fields(self):
-        fields = "_"
-        field_counter = 0
-        for _ in self.word:
-            # print("_", end="\t")
-            field_counter += 1
-        return fields * field_counter
+    def get_word(self):
+        self.secret_word = input("Wprowadź słowo do odgadnięcia: ")
 
-    # liczy ile pól jest w słowie
-    def count_fields(self):
-        return len(self.word)
+    def clear_console(self):
+        print("\n"*10)
 
-
-def fill_fields(word, chosen_letter):
-    if word.__contains__(chosen_letter):
-        for x in word:
-            if x == chosen_letter:
-                print(x, end="")
+    def guess_letter(self):
+        tmp_word = ""
+        guess = input("Wprowadź literę: ")
+        if guess in self.secret_word:
+            self.correct_guess.append(guess)
+        for letter in self.secret_word:
+            if letter in self.correct_guess:
+                tmp_word += letter
             else:
-                print("_", end="")
-    return word
+                tmp_word += "_"
+        print("aktualny status: ", tmp_word)
+        if tmp_word == self.secret_word:
+            print("Słowo zostało odgadnięte! Gratulacje!")
+        else:
+            if guess not in self.secret_word:
+                print(f"Litera {guess} nie występuje w słowie")
+                self.incorrect_guess.append(guess)
+                print("typowane litery: ", sorted(self.incorrect_guess))
+                self.remaining_attempts -= 1
+        # print(f"pozostało {self.remaining_attempts} prób")
+
+    def drawing_hangman(self):
+        if self.remaining_attempts == 7:
+            print("    ______")
+            print("    |    |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 6:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 5:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("    |    |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 4:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("    |\   |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 3:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("   /|\   |")
+            print("         |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 2:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("   /|\   |")
+            print("    |    |")
+            print("         |")
+            print("         |")
+            print("^^^^^^^^^^")
+        if self.remaining_attempts == 1:
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("   /|\   |")
+            print("    |    |")
+            print("     \   |")
+            print("         |")
+            print("^^^^^^^^^^")
+
+    def play(self):
+        while self.remaining_attempts > 0:
+            self.drawing_hangman()
+            self.guess_letter()
+        else:
+            print("Przegrana!".upper())
+            print("    ______")
+            print("    |    |")
+            print("    O    |")
+            print("   /|\   |")
+            print("    |    |")
+            print("   / \   |")
+            print("         |")
+            print("^^^^^^^^^^")
 
 
-# Deklaracja słowa
-print("Wprowadź słowo:")
-word_input = input()
-
-game1 = Hangman(word_input)
-word_length = game1.count_fields()
-print(f"Pola słowa to: {game1.print_fields()}")
-print(f"słowo sklada się z {word_length} liter")
-
-number_of_attemps = 11  # bo tyle ruchów potrzeba do narysowania szubienicy i wisielca
-print(f"Masz {number_of_attemps} prób")
-
-used_letters = []
-counter = 0
-word_result = game1.print_fields()
-while number_of_attemps > 0:
-    print(f"\nUżyte do tej pory litery: {used_letters}")
-    print("Podaj literę")
-    letter = input()
-    if word_input.__contains__(letter):
-        print(f"litera {letter} występuje w słowie")
-        print("Bieżący status słowa:")
-        fill_fields(game1.word, letter)
-    else:
-        print(f"litera {letter} NIE występuje w słowie")
-        number_of_attemps -= 1
-        used_letters.append(letter)
-        print(f"Pozostało {number_of_attemps} prób")
-    counter += 1
+game = Hangman()
+game.get_word()
+game.clear_console()
+game.play()
