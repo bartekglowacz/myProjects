@@ -1,19 +1,15 @@
-def fill_fields(word, chosen_letter):
-    tmp_word = []
-    if word.__contains__(chosen_letter):
-        for x in word:
-            if x == chosen_letter:
-                tmp_word = tmp_word + [x]
-                print(tmp_word, end="")
-            else:
-                tmp_word = tmp_word + ["_"]
-                print(tmp_word, end="")
+def display_word(secret_word):
+    display = ""
+    print(f"Beginning: {display}")
+    for letter in secret_word:
+        if letter in secret_word:
+            display += letter
+            print(display)
+        else:
+            display += "_"
+            print(display)
+    print(display)
 
 
-
-print("Wprowadź słowo")
-input_word = input()
-while True:
-    print("Wprowadź literę")
-    input_letter = input()
-    fill_fields(input_word, input_letter)
+word_input = input("Wprowadź słowo: ").lower()
+display_word(word_input)

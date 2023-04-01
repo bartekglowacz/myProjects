@@ -1,7 +1,7 @@
 import re
-import matplotlib.pyplot as draw
-import math
 import tkinter as tk
+
+import matplotlib.pyplot as draw
 
 
 def formula_converter(formula):
