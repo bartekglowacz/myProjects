@@ -48,6 +48,7 @@ class Hangman:
         print("aktualny status: ", tmp_word)
         if tmp_word == self.secret_word:
             print("Słowo zostało odgadnięte! Gratulacje!")
+            exit()
         else:
             if guess not in self.secret_word:
                 print(f"Litera {guess} nie występuje w słowie")
