@@ -1,15 +1,26 @@
-def display_word(secret_word):
-    display = ""
-    print(f"Beginning: {display}")
-    for letter in secret_word:
-        if letter in secret_word:
-            display += letter
-            print(display)
-        else:
-            display += "_"
-            print(display)
-    print(display)
+import random
 
-
-word_input = input("Wprowadź słowo: ").lower()
-display_word(word_input)
+choice = random.randint(1, 3)
+if choice == 1:
+    rock = '''
+      _______________
+     /               \\
+    |       ROCK     |
+    \________________/
+    '''
+    print(rock)
+if choice == 2:
+    rock = '''
+        /^\\
+       /   \\
+      /     \\
+      |     |
+      |     |
+      |     |
+      |     |
+      |     |
+    /  \   /  \\
+   |    |  |   |
+   ------  -----
+    '''
+    print(rock)
